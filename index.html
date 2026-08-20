@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rakhi Walking Celebration</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    overflow:hidden;
+    background:#fff5eb;
+}
+
+
+/* =====================================================
+   MAIN SCREEN
+===================================================== */
+
+.walk-section{
+    width:100%;
+    height:100vh;
+    height:100svh;
+
+    position:relative;
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(255,255,255,.95) 0%,
+            rgba(255,247,238,.75) 28%,
+            transparent 58%
+        ),
+        linear-gradient(
+            160deg,
+            #fffaf6 0%,
+            #ffeddf 48%,
+            #fff7f0 100%
+        );
+}
+
+
+/* SOFT BACKGROUND GLOW */
+
+.walk-section::before{
+    content:"";
+
+    position:absolute;
+
+    width:320px;
+    height:320px;
+
+    left:50%;
+    top:20%;
+
+    transform:translateX(-50%);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(243,190,155,.13),
+            transparent 68%
+        );
+
+    pointer-events:none;
+}
+
+
+/* =====================================================
+   BOY
+   LEFT → CENTER
+===================================================== */
+
+.boy-walker{
+    position:absolute;
+
+    left:0;
+    bottom:90px;
+
+    width:145px;
+    height:245px;
+
+    z-index:8;
+
+    will-change:transform;
+}
+
+
+/* =====================================================
+   GIRL
+   RIGHT → CENTER
+   SMALLER RIGHT IMAGE
+===================================================== */
+
+.girl-walker{
+    position:absolute;
+
+    left:0;
+
+    /*
+       girl lower so feet stay near line
+    */
+    bottom:76px;
+
+    /*
+       REDUCED GIRL SIZE
+    */
+    width:95px;
+    height:175px;
+
+    z-index:8;
+
+    will-change:transform;
+}
+
+
+/* =====================================================
+   WALKING IMAGES
+===================================================== */
+
+.boy-walker img,
+.girl-walker img{
+    position:absolute;
+
+    left:0;
+    bottom:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+    object-position:center bottom;
+
+    pointer-events:none;
+
+    transition:none !important;
+    animation:none !important;
+}
+
+
+.boy-frame-2,
+.girl-frame-2{
+    display:none;
+}
+
+
+/* =====================================================
+   FINAL HUG IMAGE
+===================================================== */
+
+.middle-image{
+    position:absolute;
+
+    left:50%;
+
+    /*
+       touching curved line
+    */
+    bottom:69px;
+
+    transform:translateX(-50%);
+
+    width:280px;
+    height:260px;
+
+    z-index:12;
+
+    display:none;
+}
+
+
+.middle-image img{
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+    object-position:center bottom;
+
+    display:block;
+}
+
+
+/* SMALL HUG ENTRY */
+
+.middle-image.show{
+    display:block;
+
+    animation:
+        hugEnter .38s
+        cubic-bezier(.2,.8,.25,1)
+        both;
+}
+
+
+@keyframes hugEnter{
+
+    from{
+        opacity:0;
+        transform:
+            translateX(-50%)
+            scale(.92);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateX(-50%)
+            scale(1);
+    }
+
+}
+
+
+/* =====================================================
+   CURVED LINE
+===================================================== */
+
+.walk-line{
+    position:absolute;
+
+    left:-8%;
+    bottom:78px;
+
+    width:116%;
+    height:90px;
+
+    border-bottom:
+        1.5px solid
+        rgba(116,77,57,.18);
+
+    border-radius:
+        0 0 50% 50%;
+
+    z-index:4;
+
+    pointer-events:none;
+}
+
+
+.walk-line::after{
+    content:"";
+
+    position:absolute;
+
+    left:8%;
+    bottom:8px;
+
+    width:84%;
+    height:68px;
+
+    border-bottom:
+        1px solid
+        rgba(116,77,57,.055);
+
+    border-radius:
+        0 0 50% 50%;
+}
+
+
+/* =====================================================
+   CELEBRATION LAYERS
+===================================================== */
+
+.balloon-layer,
+.ribbon-layer{
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    overflow:hidden;
+
+    pointer-events:none;
+}
+
+
+.balloon-layer{
+    z-index:15;
+}
+
+
+.ribbon-layer{
+    z-index:20;
+}
+
+
+/* =====================================================
+   BALLOONS
+===================================================== */
+
+.party-balloon{
+    position:absolute;
+
+    left:var(--left);
+
+    bottom:-90px;
+
+    width:var(--size);
+    height:calc(var(--size) * 1.24);
+
+    border-radius:
+        50% 50% 47% 47%;
+
+    background:
+        var(--balloon-bg);
+
+    border:
+        1px solid
+        rgba(110,75,55,.08);
+
+    box-shadow:
+        inset -5px -7px 12px
+        rgba(110,75,55,.045);
+
+    opacity:0;
+
+    will-change:transform,opacity;
+
+    animation:
+        balloonRiseBlast
+        var(--duration)
+        cubic-bezier(.18,.65,.25,1)
+        var(--delay)
+        forwards;
+}
+
+
+/* BALLOON SHINE */
+
+.party-balloon::before{
+    content:"";
+
+    position:absolute;
+
+    left:24%;
+    top:17%;
+
+    width:18%;
+    height:24%;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.45);
+
+    transform:rotate(20deg);
+}
+
+
+/* BALLOON KNOT */
+
+.party-balloon::after{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:-5px;
+
+    width:8px;
+    height:8px;
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+
+    background:inherit;
+}
+
+
+/* STRING */
+
+.balloon-string{
+    position:absolute;
+
+    left:50%;
+    top:100%;
+
+    width:1px;
+    height:65px;
+
+    background:
+        rgba(100,75,60,.15);
+
+    transform-origin:top;
+}
+
+
+/* =====================================================
+   BALLOON RISE + POP
+===================================================== */
+
+@keyframes balloonRiseBlast{
+
+    0%{
+        opacity:0;
+
+        transform:
+            translate3d(0,0,0)
+            scale(.85);
+    }
+
+    8%{
+        opacity:1;
+    }
+
+    68%{
+        opacity:1;
+
+        transform:
+            translate3d(
+                var(--drift),
+                calc(-1 * var(--rise)),
+                0
+            )
+            scale(1);
+    }
+
+    76%{
+        opacity:1;
+
+        transform:
+            translate3d(
+                var(--drift),
+                calc(-1 * var(--rise)),
+                0
+            )
+            scale(1.18);
+    }
+
+    82%{
+        opacity:0;
+
+        transform:
+            translate3d(
+                var(--drift),
+                calc(-1 * var(--rise)),
+                0
+            )
+            scale(1.7);
+    }
+
+    100%{
+        opacity:0;
+
+        transform:
+            translate3d(
+                var(--drift),
+                calc(-1 * var(--rise)),
+                0
+            )
+            scale(1.7);
+    }
+
+}
+
+
+/* =====================================================
+   FALLING RIBBONS
+===================================================== */
+
+.ribbon{
+    position:absolute;
+
+    top:-35px;
+
+    left:var(--left);
+
+    width:var(--width);
+    height:var(--height);
+
+    border-radius:2px;
+
+    background:var(--ribbon-bg);
+
+    opacity:0;
+
+    will-change:transform,opacity;
+
+    animation:
+        ribbonFall
+        var(--duration)
+        linear
+        var(--delay)
+        forwards;
+}
+
+
+@keyframes ribbonFall{
+
+    0%{
+        opacity:0;
+
+        transform:
+            translate3d(0,-30px,0)
+            rotate(0deg);
+    }
+
+    8%{
+        opacity:1;
+    }
+
+    50%{
+        transform:
+            translate3d(
+                var(--sway),
+                48vh,
+                0
+            )
+            rotate(380deg);
+    }
+
+    100%{
+        opacity:.9;
+
+        transform:
+            translate3d(
+                calc(var(--sway) * -1),
+                108vh,
+                0
+            )
+            rotate(820deg);
+    }
+
+}
+
+
+/* =====================================================
+   SMALL SPARK PARTICLES
+===================================================== */
+
+.spark{
+    position:absolute;
+
+    top:-25px;
+
+    left:var(--left);
+
+    width:5px;
+    height:5px;
+
+    border-radius:50%;
+
+    background:
+        rgba(220,151,105,.65);
+
+    opacity:0;
+
+    animation:
+        sparkFall
+        var(--duration)
+        linear
+        var(--delay)
+        forwards;
+}
+
+
+@keyframes sparkFall{
+
+    0%{
+        opacity:0;
+
+        transform:
+            translateY(-20px)
+            scale(.4);
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:.2;
+
+        transform:
+            translateY(105vh)
+            scale(1);
+    }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media(max-width:360px){
+
+    /* BOY */
+
+    .boy-walker{
+        width:125px;
+        height:220px;
+
+        bottom:82px;
+    }
+
+
+    /* SMALLER GIRL */
+
+    .girl-walker{
+        width:82px;
+        height:155px;
+
+        bottom:68px;
+    }
+
+
+    /* HUG IMAGE TOUCH LINE */
+
+    .middle-image{
+        width:245px;
+        height:235px;
+
+        bottom:62px;
+    }
+
+
+    .walk-line{
+        bottom:70px;
+    }
+
+}
+
+
+/* =====================================================
+   LARGE MOBILE
+===================================================== */
+
+@media(min-width:430px){
+
+    .boy-walker{
+        width:155px;
+        height:260px;
+
+        bottom:90px;
+    }
+
+
+    .girl-walker{
+        width:102px;
+        height:185px;
+
+        bottom:76px;
+    }
+
+
+    .middle-image{
+        width:300px;
+        height:275px;
+
+        bottom:69px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<section
+    class="walk-section"
+    id="walkSection"
+>
+
+
+    <!-- =================================================
+         BOY WALKING
+    ================================================== -->
+
+    <div
+        class="boy-walker"
+        id="boyWalker"
+    >
+
+        <img
+            src="image3.png"
+            class="boy-frame boy-frame-1"
+            alt="Boy walking frame 1"
+        >
+
+        <img
+            src="image4.png"
+            class="boy-frame boy-frame-2"
+            alt="Boy walking frame 2"
+        >
+
+    </div>
+
+
+
+    <!-- =================================================
+         GIRL WALKING
+    ================================================== -->
+
+    <div
+        class="girl-walker"
+        id="girlWalker"
+    >
+
+        <img
+            src="image5.png"
+            class="girl-frame girl-frame-1"
+            alt="Girl walking frame 1"
+        >
+
+        <img
+            src="image6.png"
+            class="girl-frame girl-frame-2"
+            alt="Girl walking frame 2"
+        >
+
+    </div>
+
+
+
+    <!-- =================================================
+         HUG IMAGE
+    ================================================== -->
+
+    <div
+        class="middle-image"
+        id="middleImage"
+    >
+
+        <img
+            src="image7.png"
+            alt="Boy and girl hugging"
+        >
+
+    </div>
+
+
+
+    <!-- CURVED LINE -->
+
+    <div class="walk-line"></div>
+
+
+
+    <!-- =================================================
+         BALLOONS GENERATED BY JS
+    ================================================== -->
+
+    <div
+        class="balloon-layer"
+        id="balloonLayer"
+    ></div>
+
+
+
+    <!-- =================================================
+         RIBBONS GENERATED BY JS
+    ================================================== -->
+
+    <div
+        class="ribbon-layer"
+        id="ribbonLayer"
+    ></div>
+
+
+</section>
+
+
+
+<script>
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const walkSection =
+document.getElementById("walkSection");
+
+const boyWalker =
+document.getElementById("boyWalker");
+
+const girlWalker =
+document.getElementById("girlWalker");
+
+const boyFrames =
+document.querySelectorAll(".boy-frame");
+
+const girlFrames =
+document.querySelectorAll(".girl-frame");
+
+const middleImage =
+document.getElementById("middleImage");
+
+const balloonLayer =
+document.getElementById("balloonLayer");
+
+const ribbonLayer =
+document.getElementById("ribbonLayer");
+
+
+
+/* =====================================================
+   WALK SETTINGS
+===================================================== */
+
+const walkingSpeed = 95;
+
+const frameSpeed = 180;
+
+
+let boyWalking = true;
+let girlWalking = true;
+
+
+let boyFrameIndex = 0;
+let girlFrameIndex = 0;
+
+
+let celebrationStarted = false;
+
+
+
+/* =====================================================
+   CHARACTER SIZE
+===================================================== */
+
+let boyWidth =
+boyWalker.offsetWidth;
+
+
+let girlWidth =
+girlWalker.offsetWidth;
+
+
+
+/* =====================================================
+   START POSITIONS
+===================================================== */
+
+let boyPosition =
+-boyWidth - 20;
+
+
+let girlPosition =
+walkSection.clientWidth + 20;
+
+
+
+/* =====================================================
+   STOP POSITIONS
+===================================================== */
+
+let boyStopPosition;
+
+let girlStopPosition;
+
+
+function calculateStopPositions(){
+
+    const center =
+    walkSection.clientWidth / 2;
+
+
+    boyStopPosition =
+    center - boyWidth + 8;
+
+
+    /*
+       small girl stays right of boy
+    */
+
+    girlStopPosition =
+    center - 4;
+
+}
+
+
+calculateStopPositions();
+
+
+
+/* =====================================================
+   SET START POSITION
+===================================================== */
+
+boyWalker.style.transform =
+`translate3d(${boyPosition}px,0,0)`;
+
+
+girlWalker.style.transform =
+`translate3d(${girlPosition}px,0,0)`;
+
+
+
+/* =====================================================
+   BOY WALK FRAMES
+===================================================== */
+
+function changeBoyFrame(){
+
+    if(!boyWalking){
+        return;
+    }
+
+
+    boyFrames.forEach(frame => {
+
+        frame.style.display =
+        "none";
+
+    });
+
+
+    boyFrames[
+        boyFrameIndex
+    ].style.display =
+    "block";
+
+
+    boyFrameIndex =
+    boyFrameIndex === 0
+    ? 1
+    : 0;
+
+}
+
+
+
+/* =====================================================
+   GIRL WALK FRAMES
+===================================================== */
+
+function changeGirlFrame(){
+
+    if(!girlWalking){
+        return;
+    }
+
+
+    girlFrames.forEach(frame => {
+
+        frame.style.display =
+        "none";
+
+    });
+
+
+    girlFrames[
+        girlFrameIndex
+    ].style.display =
+    "block";
+
+
+    girlFrameIndex =
+    girlFrameIndex === 0
+    ? 1
+    : 0;
+
+}
+
+
+
+changeBoyFrame();
+
+changeGirlFrame();
+
+
+
+/* =====================================================
+   FRAME TIMERS
+===================================================== */
+
+const boyFrameTimer =
+setInterval(
+    changeBoyFrame,
+    frameSpeed
+);
+
+
+const girlFrameTimer =
+setInterval(
+    changeGirlFrame,
+    frameSpeed
+);
+
+
+
+/* =====================================================
+   MOVEMENT
+===================================================== */
+
+let lastTime =
+performance.now();
+
+
+function moveCharacters(time){
+
+    const delta =
+    Math.min(
+        (time - lastTime) / 1000,
+        .04
+    );
+
+
+    lastTime = time;
+
+
+
+    /* =================================================
+       BOY
+    ================================================= */
+
+    if(boyWalking){
+
+        boyPosition +=
+        walkingSpeed * delta;
+
+
+        if(
+            boyPosition >=
+            boyStopPosition
+        ){
+
+            boyPosition =
+            boyStopPosition;
+
+
+            boyWalking =
+            false;
+
+
+            clearInterval(
+                boyFrameTimer
+            );
+
+
+            boyFrames[0].style.display =
+            "block";
+
+
+            boyFrames[1].style.display =
+            "none";
+
+        }
+
+
+        boyWalker.style.transform =
+        `translate3d(${boyPosition}px,0,0)`;
+
+    }
+
+
+
+    /* =================================================
+       GIRL
+    ================================================= */
+
+    if(girlWalking){
+
+        girlPosition -=
+        walkingSpeed * delta;
+
+
+        if(
+            girlPosition <=
+            girlStopPosition
+        ){
+
+            girlPosition =
+            girlStopPosition;
+
+
+            girlWalking =
+            false;
+
+
+            clearInterval(
+                girlFrameTimer
+            );
+
+
+            girlFrames[0].style.display =
+            "block";
+
+
+            girlFrames[1].style.display =
+            "none";
+
+        }
+
+
+        girlWalker.style.transform =
+        `translate3d(${girlPosition}px,0,0)`;
+
+    }
+
+
+
+    /* =================================================
+       BOTH REACHED CENTER
+    ================================================= */
+
+    if(
+        !boyWalking &&
+        !girlWalking
+    ){
+
+        boyWalker.style.display =
+        "none";
+
+
+        girlWalker.style.display =
+        "none";
+
+
+        middleImage.classList.add(
+            "show"
+        );
+
+
+        /*
+           START CELEBRATION
+           AFTER HUG APPEARS
+        */
+
+        if(!celebrationStarted){
+
+            celebrationStarted =
+            true;
+
+
+            setTimeout(
+                startCelebration,
+                650
+            );
+
+        }
+
+
+        return;
+
+    }
+
+
+
+    requestAnimationFrame(
+        moveCharacters
+    );
+
+}
+
+
+
+/* =====================================================
+   START WALK
+===================================================== */
+
+requestAnimationFrame(
+    moveCharacters
+);
+
+
+
+/* =====================================================
+   BALLOON COLORS
+
+   SOFT COLORS THAT MATCH BACKGROUND
+===================================================== */
+
+const balloonColors = [
+
+    "rgba(236,164,132,.84)",
+
+    "rgba(245,196,121,.82)",
+
+    "rgba(226,147,153,.76)",
+
+    "rgba(215,173,199,.72)",
+
+    "rgba(244,177,160,.82)",
+
+    "rgba(239,207,154,.86)"
+
+];
+
+
+
+/* =====================================================
+   START CELEBRATION
+===================================================== */
+
+function startCelebration(){
+
+    createBalloons();
+
+
+    /*
+       start ribbons shortly after balloons rise
+    */
+
+    setTimeout(
+        createRibbons,
+        1350
+    );
+
+}
+
+
+
+/* =====================================================
+   CREATE MANY BALLOONS
+
+   LIMITED COUNT FOR SMOOTH MOBILE PERFORMANCE
+===================================================== */
+
+function createBalloons(){
+
+    const balloonCount =
+    window.innerWidth <= 360
+    ? 16
+    : 22;
+
+
+    for(
+        let i = 0;
+        i < balloonCount;
+        i++
+    ){
+
+        const balloon =
+        document.createElement("div");
+
+
+        balloon.className =
+        "party-balloon";
+
+
+        const size =
+        24 +
+        Math.random() * 24;
+
+
+        const left =
+        Math.random() * 94;
+
+
+        const rise =
+        280 +
+        Math.random() * 300;
+
+
+        const drift =
+        -40 +
+        Math.random() * 80;
+
+
+        const delay =
+        Math.random() * 1.2;
+
+
+        const duration =
+        2.5 +
+        Math.random() * .9;
+
+
+        const color =
+        balloonColors[
+            Math.floor(
+                Math.random() *
+                balloonColors.length
+            )
+        ];
+
+
+        balloon.style.setProperty(
+            "--size",
+            size + "px"
+        );
+
+
+        balloon.style.setProperty(
+            "--left",
+            left + "%"
+        );
+
+
+        balloon.style.setProperty(
+            "--rise",
+            rise + "px"
+        );
+
+
+        balloon.style.setProperty(
+            "--drift",
+            drift + "px"
+        );
+
+
+        balloon.style.setProperty(
+            "--delay",
+            delay + "s"
+        );
+
+
+        balloon.style.setProperty(
+            "--duration",
+            duration + "s"
+        );
+
+
+        balloon.style.setProperty(
+            "--balloon-bg",
+            color
+        );
+
+
+        /* STRING */
+
+        const string =
+        document.createElement("span");
+
+
+        string.className =
+        "balloon-string";
+
+
+        balloon.appendChild(
+            string
+        );
+
+
+        balloonLayer.appendChild(
+            balloon
+        );
+
+
+        /*
+           REMOVE AFTER FINISHED
+           prevents lag / DOM buildup
+        */
+
+        setTimeout(
+            () => {
+
+                balloon.remove();
+
+            },
+            (delay + duration + .5) * 1000
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   RIBBON COLORS
+===================================================== */
+
+const ribbonColors = [
+
+    "rgba(215,129,94,.85)",
+
+    "rgba(239,183,102,.90)",
+
+    "rgba(213,132,139,.82)",
+
+    "rgba(190,145,187,.75)",
+
+    "rgba(233,158,126,.85)"
+
+];
+
+
+
+/* =====================================================
+   CREATE FALLING RIBBONS
+===================================================== */
+
+function createRibbons(){
+
+    const ribbonCount =
+    window.innerWidth <= 360
+    ? 36
+    : 48;
+
+
+    for(
+        let i = 0;
+        i < ribbonCount;
+        i++
+    ){
+
+        const ribbon =
+        document.createElement("span");
+
+
+        ribbon.className =
+        "ribbon";
+
+
+        const left =
+        Math.random() * 100;
+
+
+        const width =
+        3 +
+        Math.random() * 4;
+
+
+        const height =
+        10 +
+        Math.random() * 17;
+
+
+        const delay =
+        Math.random() * .9;
+
+
+        const duration =
+        2.8 +
+        Math.random() * 1.8;
+
+
+        const sway =
+        -45 +
+        Math.random() * 90;
+
+
+        const color =
+        ribbonColors[
+            Math.floor(
+                Math.random() *
+                ribbonColors.length
+            )
+        ];
+
+
+        ribbon.style.setProperty(
+            "--left",
+            left + "%"
+        );
+
+
+        ribbon.style.setProperty(
+            "--width",
+            width + "px"
+        );
+
+
+        ribbon.style.setProperty(
+            "--height",
+            height + "px"
+        );
+
+
+        ribbon.style.setProperty(
+            "--delay",
+            delay + "s"
+        );
+
+
+        ribbon.style.setProperty(
+            "--duration",
+            duration + "s"
+        );
+
+
+        ribbon.style.setProperty(
+            "--sway",
+            sway + "px"
+        );
+
+
+        ribbon.style.setProperty(
+            "--ribbon-bg",
+            color
+        );
+
+
+        ribbonLayer.appendChild(
+            ribbon
+        );
+
+
+        setTimeout(
+            () => {
+
+                ribbon.remove();
+
+            },
+            (delay + duration + .5) * 1000
+        );
+
+    }
+
+
+
+    /* =================================================
+       SMALL ROUND SPARKS
+    ================================================= */
+
+    const sparkCount =
+    18;
+
+
+    for(
+        let i = 0;
+        i < sparkCount;
+        i++
+    ){
+
+        const spark =
+        document.createElement("span");
+
+
+        spark.className =
+        "spark";
+
+
+        const left =
+        Math.random() * 100;
+
+
+        const delay =
+        Math.random() * 1;
+
+
+        const duration =
+        2.8 +
+        Math.random() * 1.5;
+
+
+        spark.style.setProperty(
+            "--left",
+            left + "%"
+        );
+
+
+        spark.style.setProperty(
+            "--delay",
+            delay + "s"
+        );
+
+
+        spark.style.setProperty(
+            "--duration",
+            duration + "s"
+        );
+
+
+        ribbonLayer.appendChild(
+            spark
+        );
+
+
+        setTimeout(
+            () => {
+
+                spark.remove();
+
+            },
+            (delay + duration + .5) * 1000
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   RESPONSIVE RESIZE
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+        boyWidth =
+        boyWalker.offsetWidth;
+
+
+        girlWidth =
+        girlWalker.offsetWidth;
+
+
+        calculateStopPositions();
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>
